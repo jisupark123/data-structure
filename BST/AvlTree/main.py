@@ -1,0 +1,22 @@
+from tree import Tree
+
+tree = Tree()
+tree.insert(10)
+tree.insert(20)
+tree.insert(5)
+tree.insert(80)
+tree.insert(90)
+tree.insert(7550)
+tree.insert(30)
+tree.insert(77)
+tree.insert(15)
+tree.insert(40)
+tree.insert(40)
+# tree.delete(7550)
+# tree.delete(10000)
+# tree.in_order(tree.get_root())
+print(tree.search(97))
+
+# # tree.delete(28)
+# print()
+# in_order(tree.get_root())
