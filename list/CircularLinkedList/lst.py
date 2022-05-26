@@ -158,12 +158,12 @@ class List:
                 prev, target = target, target.next
         return (None, None)
 
-    def print(self):
+    def __str__(self):
         res = ""
         for element in self:
             res += f"{element}, "
 
-        print("[" + res[:-2] + "]")
+        return "[" + res[:-2] + "]"
 
     def __iter__(self):
         return ListIterator(self)

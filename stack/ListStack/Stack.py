@@ -12,19 +12,21 @@ class Stack:
         self.__stack.append(x)
 
     def pop(self):
+        if self.is_empty():
+            raise IndexError("pop from empty list")
         return self.__stack.pop()
 
     def top(self):
         if self.is_empty():
-            return None
+            raise IndexError("stack index out of range")
         else:
             return self.__stack[-1]
 
     def is_empty(self) -> bool:
         return not bool(self.__stack)
 
-    def print(self):
-        print("Stack from top: ", end="")
-        for i in range(len(self.__stack) - 1, -1, -1):
-            print(self.__stack[i], end=" ")
-        print()
+    def __str__(self):
+        res = ""
+        for element in self.__stack:
+            res += f"{element}, "
+        return f"stack([{res[:-2]}])"

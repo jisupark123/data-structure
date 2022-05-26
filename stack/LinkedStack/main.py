@@ -1,16 +1,8 @@
 from Stack import Stack
 
-
-def reverse(s):
-    stack = Stack()
-    for i in range(len(s)):
-        stack.push(s[i])
-    res = ""
-    for _ in range(stack.size()):
-        res += stack.pop()
-
-    return res
-
-
-input = input("Input: ")
-print(reverse(input))
+a = Stack()
+for i in range(10):
+    a.push(i + 1)
+print(a.top())
+print(a.pop())
+print(a)

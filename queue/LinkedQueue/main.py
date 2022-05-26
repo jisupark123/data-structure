@@ -1,8 +1,9 @@
 from Queue import Queue
 
 a = Queue()
-for i in range(5):
+for i in range(10):
     a.enqueue(i + 1)
 
 a.dequeue()
-a.print()
+print(a.front())
+print(a)

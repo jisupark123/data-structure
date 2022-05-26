@@ -1,6 +1,6 @@
 from node import Node
 
-# 연결 리스트 (Basic)
+# 단순 연결 리스트 (Basic)
 # 내장 리스트와 다르게 공간의 제약이 없음
 
 # 접근 - 최선 O(1), 최악 O(n)
@@ -136,11 +136,11 @@ class List:
                 prev, target = target, target.next
         return (None, None)
 
-    def print(self):
+    def __str__(self):
         res = ""
         node = self.__head.next
-        for _ in range(self.__cnt - 1):
+        for _ in range(self.__cnt):
             res += f"{node.item}, "
             node = node.next
 
-        print(f"[{res}{node.item}]")
+        return f"[{res[:-2]}]"

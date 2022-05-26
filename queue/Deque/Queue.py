@@ -1,27 +1,16 @@
-from node import Node
+class Node:
+    def __init__(self, new_item, prev: "Node", next: "Node"):
+        self.item = new_item
+        self.prev = prev
+        self.next = next
 
-# 이중 && 원형 연결 리스트
-# 양방향 순회가 가능한 장점이 있어서 다양한 알고리즘에 유용하게 쓰인다.
-# 이전의 노드를 저장할 공간이 하나 더 필요하다는 단점이 있다.
 
-
-class List:
+class Deque:
     def __init__(self):
         self.__head = Node("dummy", None, None)
         self.__head.prev = self.__head
         self.__head.next = self.__head
         self.__cnt = 0  # 노드의 개수
-
-    # i번째 인덱스에 원소 삽입
-    def insert(self, i: int, new_item) -> None:
-        if i >= 0 and i <= self.__cnt:  # Item이 3개 있으면 0,1,2,3 까지 허용
-            prev = self.get_node(i - 1)
-            new_node = Node(new_item, prev, prev.next)
-            new_node.next.prev = new_node
-            prev.next = new_node
-            self.__cnt += 1
-        else:
-            raise IndexError("list index out of range")
 
     # 리스트 끝에 원소 삽입
     def append(self, new_item) -> None:
@@ -39,23 +28,16 @@ class List:
         next.prev = new_node
         self.__cnt += 1
 
-    # 매개변수가 없거나 -1이면 맨 끝 원소 삭제 & 반환
-    # 매개변수가 주어지면 해당 인덱스 원소 삭제 & 반환
-    def pop(self, *args) -> Node:
+    # 맨 끝 원소 삭제 & 반환
+    def pop(self) -> Node:
         if self.is_empty():  # 리스트가 비었는지 확인
-            raise IndexError("pop from empty list")
-        if len(args) != 0:
-            i = args[0]
-        if len(args) == 0 or i == -1:  # 매개변수가 없거나 -1이면 맨 끝 원소 삭제 & 반환
-            i = self.__cnt - 1
-        if i >= 0 and i < self.__cnt:
-            target = self.get_node(i)
-            target.prev.next = target.next
-            target.next.prev = target.prev
-            self.__cnt -= 1
-            return target.item
-        else:
-            raise IndexError("pop index out of range")
+            raise IndexError("pop from empty deque")
+
+        target = self.__head.prev
+        target.prev.next = target.next
+        target.next.prev = target.prev
+        self.__cnt -= 1
+        return target.item
 
     # 맨 앞의 원소 삭제 & 반환
     def popleft(self) -> Node:
@@ -73,21 +55,17 @@ class List:
             self.__cnt -= 1
             return x
         else:
-            raise ValueError(f"list.remove(x): {x} not in list")
+            raise ValueError(f"deque.remove(x): {x} not in deque")
 
-    # 매개변수가 없거나 -1이면 마지막 원소를 반환
-    # 매개변수가 주어지면 해당 인덱스의 원소를 반환
-    def get(self, *args):
-        if self.is_empty():
-            return None
-        if len(args) != 0:
-            i = args[0]
-        if len(args) == 0 or i == -1:
-            i = self.__cnt - 1
-        if i >= 0 and i < self.__cnt:
-            return self.get_node(i).item
-        else:
-            raise IndexError("list index out of range")
+    def front(self):
+        if self.__cnt == 0:
+            raise IndexError("deque index out of range")
+        return self.__head.next.item
+
+    def end(self):
+        if self.__cnt == 0:
+            raise IndexError("deque index out of range")
+        return self.__head.prev.item
 
     def index(self, x) -> int:
         res = 0
@@ -122,8 +100,13 @@ class List:
         for element in arr:
             self.append(element)
 
+    # 왼쪽에서 확장
+    def extendleft(self, arr):  # arr은 순회 가능한 모든 객체
+        for i in range(len(arr) - 1, -1, -1):
+            self.appendleft(arr[i])
+
     def copy(self) -> Node:
-        res = List()
+        res = Deque()
         for element in self:
             res.append(element)
         return res
@@ -172,21 +155,19 @@ class List:
                 target = target.next
         return None
 
-    def __str__(self):
+    def __str__(self) -> None:
         res = ""
-        node = self.__head.next
-        for _ in range(self.__cnt):
-            res += f"{node.item}, "
-            node = node.next
+        for element in self:
+            res += f"{element}, "
 
-        return f"[{res[:-2]}]"
+        return f"deque([{res[:-2]}])"
 
     def __iter__(self):
         return ListIterator(self)
 
 
 class ListIterator:
-    def __init__(self, lst: List):
+    def __init__(self, lst: Deque):
         self.__head = lst.get_node(-1)  # 가짜 헤드
         self.iterPosition = self.__head.next  # 0번 노드
 
