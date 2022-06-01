@@ -2,8 +2,8 @@ from node import Node
 
 # 원형 연결 리스트
 # 마지막 원소가 처음 원소를 가리킴
-# 단순연결리스트와 다르게 head 대신 tail에 대한 정보를 가지고 있으므로 append() 연산에 강점을 보임
-# 따라서 append() 연산이 필요한 extend(), copy(), reverse()가 훨씬 부담이 없어짐
+# 리스트의 처음과 끝에 대한 정보를 가지고 있으므로 append(), insert(0) 연산 모두 강점을 보임
+# 따라서 extend(), copy(), reverse() 연산에 부담이 줄어듦
 
 # 접근(get) - O(n)
 # 맨앞, 맨끝에 원소 추가(insert(0), append) - O(1)

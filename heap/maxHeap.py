@@ -13,7 +13,7 @@
 # 1. 루트(맨앞)를 맨끝의 원소로 교체
 # 2. 자식이랑 비교해서 자식이 더 크면 둘이 교체(재귀적으로 반복)(스며내리기)
 
-# 힙 만들기 (buildHeap) - O(n)
+# 힙 생성 (buildHeap) - O(n)
 # 삽입(insert) - O(log n)
 # 삭제(deleteMax) - O(log n)
 # 접근(max) - O(1)
